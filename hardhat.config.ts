@@ -15,7 +15,7 @@ const providerApiKey = process.env.ALCHEMY_API_KEY || "oKxs-03sij-U_N0iOlrSsZFr2
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.24",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,
@@ -54,6 +54,7 @@ const config: HardhatUserConfig = {
   // configuration for harhdat-verify plugin
   etherscan: {
     apiKey: {
+      sepolia: etherscanApiKey,
       scrollSepolia: "9ETYSGFT5S7WG4YZ4TJA7BA92774QJZ1AA",
     },
     customChains: [

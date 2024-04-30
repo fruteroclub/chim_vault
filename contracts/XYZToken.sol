@@ -3,9 +3,12 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 import { AddressArrayUtils } from "./lib/AddressArrayUtils.sol";
 
-contract XYZToken is ERC20 {
+contract XYZToken is ERC20, ERC20Pausable, Ownable {
 
     using AddressArrayUtils for address[];
 
@@ -48,10 +51,12 @@ contract XYZToken is ERC20 {
         int256[] memory _units,
         address _manager,
         string memory _name,
-        string memory _symbol
+        string memory _symbol,
+        address initialOwner
     )
         public
         ERC20(_name, _symbol)
+        Ownable(initialOwner)
     {
         manager = _manager;
         positionMultiplier = 1e18;
@@ -88,6 +93,20 @@ contract XYZToken is ERC20 {
         emit ManagerEdited(_manager, oldManager);
     }
 
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    function unpause() public onlyOwner {
+        _unpause();
+    }
+
+    function _update(address from, address to, uint256 value)
+        internal
+        override(ERC20, ERC20Pausable)
+    {
+        super._update(from, to, value);
+    }
      /* ============ External Getter Functions ============ */
 
     function getComponents() external view returns(address[] memory) {

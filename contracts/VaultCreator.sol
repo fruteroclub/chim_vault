@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-
+// The code base was taken from Set Protocol's repository, and modified by @0xVato
 pragma solidity ^0.8.20;
 
 import { XYZToken } from "./XYZToken.sol";
@@ -48,7 +48,8 @@ contract VaultCreator {
             _units,
             _manager,
             _name,
-            _symbol
+            _symbol,
+            0xCC93cBC4Baf4D217Da6b930A6eAB175b5a23fE52
         );
 
         emit NewVaultCreated(address(vToken), _manager, _name, _symbol);
